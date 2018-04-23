@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class SimpleApplicationObject {
+    // TODO - migrate this to Google Flogger
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected Logger getLogger() {
