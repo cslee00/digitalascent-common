@@ -98,8 +98,6 @@ ext.versions = [
 dependencies {
     resolutionRules 'com.netflix.nebula:gradle-resolution-rules:latest.release'
 
-    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
-
     implementation group: 'com.google.guava', name: 'guava', version: "${versions.guava}"
     implementation group: 'org.slf4j', name: 'slf4j-api', version: "${versions.slf4j}"
 
