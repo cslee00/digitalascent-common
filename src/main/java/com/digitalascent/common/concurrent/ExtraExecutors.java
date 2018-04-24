@@ -40,6 +40,6 @@ public final class ExtraExecutors {
     }
 
     private ExtraExecutors() {
-        StaticUtilityClass.cannotInstantiate( getClass() );
+        StaticUtilityClass.throwCannotInstantiateError( getClass() );
     }
 }

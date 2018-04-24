@@ -129,7 +129,7 @@ public final class ExtraStreams {
     }
 
     private ExtraStreams() {
-        StaticUtilityClass.cannotInstantiate( getClass() );
+        StaticUtilityClass.throwCannotInstantiateError( getClass() );
     }
 
     /**

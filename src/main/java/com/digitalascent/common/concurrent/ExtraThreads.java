@@ -125,7 +125,7 @@ public final class ExtraThreads {
 
 
     private ExtraThreads() {
-        StaticUtilityClass.cannotInstantiate( getClass() );
+        StaticUtilityClass.throwCannotInstantiateError( getClass() );
     }
 
     private static AtomicLong threadFactoryCounter = new AtomicLong();

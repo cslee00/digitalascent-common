@@ -33,6 +33,6 @@ public final class ExtraByteStreams {
     }
 
     private ExtraByteStreams() {
-        StaticUtilityClass.cannotInstantiate( getClass() );
+        StaticUtilityClass.throwCannotInstantiateError( getClass() );
     }
 }

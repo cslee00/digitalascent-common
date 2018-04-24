@@ -2,11 +2,17 @@ package com.digitalascent.common.base;
 
 public final class StaticUtilityClass {
 
-    public static void cannotInstantiate( Class<?> clazz ) {
-        throw new AssertionError("Cannot instantiate static utility class " + clazz );
+    private static class CannotInstantiateStaticUtilityClassError extends AssertionError {
+        CannotInstantiateStaticUtilityClassError(Class<?> clazz) {
+            super("Static utility class cannot be instantiated: " + clazz);
+        }
+    }
+
+    public static void throwCannotInstantiateError(Class<?> clazz ) {
+        throw new CannotInstantiateStaticUtilityClassError( clazz );
     }
 
     private StaticUtilityClass() {
-        cannotInstantiate( getClass() );
+        throwCannotInstantiateError( getClass() );
     }
 }
