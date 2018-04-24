@@ -46,6 +46,15 @@ public final class ExtraStreams {
 
     /**
      * Create a stream that synchronously lazy-loads batches of elements from the provided supplier.
+     * Example usage:
+     *
+     * <pre>
+     * return ExtraStreams.batchLoadingStream(nextBatchToken -> {
+     *      describeParametersRequest.setNextToken(nextBatchToken);
+     *      DescribeParametersResult result = ssm.describeParameters(describeParametersRequest);
+     *      return new Batch<>( result.getNextToken(),result.getParameters() );
+     * });
+     * </pre>
      *
      * @param batchSupplier the supplier that provides batches to expose in the stream
      * @param <T>           type of element
