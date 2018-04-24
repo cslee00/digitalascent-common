@@ -21,9 +21,12 @@ import com.digitalascent.common.base.StaticUtilityClass;
 import com.digitalascent.common.concurrent.ExtraThreads;
 import com.google.common.base.Throwables;
 import com.google.common.base.Verify;
+import com.google.common.collect.Iterators;
 import com.google.common.util.concurrent.Uninterruptibles;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Spliterator;
@@ -43,6 +46,21 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Verify.verify;
 
 public final class ExtraStreams {
+
+    /**
+     * Returns a stream over the provided enumeration
+     *
+     * @param enumeration
+     * @param <T>
+     * @return
+     */
+    public static <T> Stream<T> streamFor(@Nullable  Enumeration<T> enumeration) {
+        if( enumeration == null ) {
+            return Stream.empty();
+        }
+        return StreamSupport.stream(
+                Spliterators.spliteratorUnknownSize( Iterators.forEnumeration(enumeration), Spliterator.ORDERED), false );
+    }
 
     /**
      * Create a stream that synchronously lazy-loads batches of elements from the provided supplier.
