@@ -9,19 +9,19 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public final class GzipByteSink extends ByteSink {
     private final ByteSink delegate;
-    private final int compressionLevel;
+    private final GzipCompressionLevel compressionLevel;
 
-    public GzipByteSink(ByteSink delegate, int compressionLevel ) {
+    public GzipByteSink(ByteSink delegate, GzipCompressionLevel compressionLevel) {
         this.delegate = checkNotNull(delegate, "delegate is required");
-        this.compressionLevel = compressionLevel;
+        this.compressionLevel = checkNotNull(compressionLevel, "compressionLevel is required");
     }
 
-    public GzipByteSink(ByteSink delegate ) {
-        this( delegate, 6 );
+    public GzipByteSink(ByteSink delegate) {
+        this(delegate, GzipCompressionLevel.BALANCED);
     }
 
     @Override
     public OutputStream openStream() throws IOException {
-        return new ConfigurableGzipOutputStream( delegate.openBufferedStream(), compressionLevel );
+        return new ConfigurableGZIPOutputStream(delegate.openBufferedStream(), compressionLevel);
     }
 }

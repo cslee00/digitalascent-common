@@ -160,7 +160,7 @@ public final class LambdaCheckedExceptionRethrowers {
     }
 
     private LambdaCheckedExceptionRethrowers() {
-        StaticUtilityClass.throwCannotInstantiateError( getClass() );
+        StaticUtilityClass.throwCannotInstantiateError(getClass());
     }
 
 }
