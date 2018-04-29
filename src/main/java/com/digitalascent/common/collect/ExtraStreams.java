@@ -158,6 +158,8 @@ public final class ExtraStreams {
     private static class BatchIterator<T> implements Iterator<Iterable<T>> {
         private final BatchSupplier<T> batchSupplier;
         private Batch<T> currentBatch;
+
+        @Nullable
         private String lastToken;
 
         BatchIterator(BatchSupplier<T> batchSupplier) {
@@ -229,6 +231,7 @@ public final class ExtraStreams {
             return true;
         }
 
+        @Nullable
         @Override
         public Spliterator<T> trySplit() {
             return null;

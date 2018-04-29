@@ -30,7 +30,7 @@ public final class ExtraByteStreams {
         return new ConfigurableGZIPOutputStream(outputStream,compressionLevel);
     }
 
-    public OutputStream closeSupressingOutputStream(OutputStream outputStream) {
+    public OutputStream closeSuppressingOutputStream(OutputStream outputStream) {
         checkNotNull(outputStream, "outputStream is required");
         return new FilterOutputStream( outputStream ) {
             @Override
@@ -40,11 +40,11 @@ public final class ExtraByteStreams {
         };
     }
 
-    public InputStream closeSupressingInputStream(InputStream inputStream) {
+    public InputStream closeSuppressingInputStream(InputStream inputStream) {
         checkNotNull(inputStream, "inputStream is required");
         return new FilterInputStream(inputStream) {
             @Override
-            public void close() throws IOException {
+            public void close() {
                 // ignore close
             }
         };

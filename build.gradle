@@ -17,13 +17,8 @@
 plugins {
     id "java-library"
     id "groovy"
-    id "net.ltgt.errorprone" version "0.0.13"
 
-    id 'nebula.project' version '3.4.1'
-    id 'nebula.nebula-bintray' version '3.5.2'
-    id "nebula.resolution-rules" version "5.2.0"
-
-    id 'pl.allegro.tech.build.axion-release' version '1.9.0'
+    id "com.digitalascent.gradle.project" version "0.2.1"
 }
 
 scmVersion {
@@ -33,11 +28,11 @@ scmVersion {
         versionSeparator = '/'
     }
 }
+
 group = "com.digitalascent"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 version = scmVersion.version
-
 
 repositories {
     jcenter()
@@ -52,30 +47,12 @@ tasks.withType(JavaCompile) {
                         "overrides", "path", "processing", "static", "try", "fallthrough", "rawtypes", "deprecation",
                         "unchecked", "-options"].collect { "-Xlint:${it}" }
 
-        // configure Google Error Prone: https://github.com/tbroyer/gradle-errorprone-plugin, http://errorprone.info/
-        ext.errorProneOptsError = ["AssertFalse", "BigDecimalLiteralDouble", "ConstructorInvokesOverridable",  "EmptyTopLevelDeclaration", "MissingDefault",
-                                   "NonCanonicalStaticMemberImport", "PrimitiveArrayPassedToVarargsMethod", "RedundantThrows", "StaticQualifiedUsingExpression", "StringEquality",
-                                   "UnnecessaryDefaultInEnumSwitch", "WildcardImport", "MultipleTopLevelClasses", "MultiVariableDeclaration", "MixedArrayDimensions", "MethodCanBeStatic",
-                                   "PrivateConstructorForUtilityClass", "PackageLocation", "ConstantField"].collect {
-            "-Xep:${it}:ERROR"
-        }
-
-        // TODO - re-enable once https://github.com/google/error-prone/issues/472 is fixed
-        // "ReturnMissingNullable", "FieldMissingNullable", "ParameterNotNullable",
-
-        // "ConstructorLeaksThis",
-
-        ext.errorProneOptsWarning = [].collect { "-Xep:${it}:WARNING" }
-        ext.errorProneOptsOff = [].collect { "-Xep:${it}:OFF" }
 
         // http://docs.oracle.com/javase/8/docs/technotes/tools/windows/javac.html
         // -Werror - terminates compilation when warnings occur
         ext.generalArgs = []
 //            ext.generalArgs = ["-Werror"]
 
-        compilerArgs += errorProneOptsError
-        compilerArgs += errorProneOptsWarning
-        compilerArgs += errorProneOptsOff
         compilerArgs += lintOpts
         compilerArgs += generalArgs
         encoding = 'UTF-8'
@@ -84,12 +61,9 @@ tasks.withType(JavaCompile) {
 ext.versions = [
         "guava" : "24.0-jre",
         "slf4j" : "1.7.25",
-
 ]
 
 dependencies {
-    resolutionRules 'com.netflix.nebula:gradle-resolution-rules:latest.release'
-
     implementation group: 'com.google.guava', name: 'guava', version: "${versions.guava}"
     implementation group: 'org.slf4j', name: 'slf4j-api', version: "${versions.slf4j}"
 
@@ -101,10 +75,6 @@ dependencies {
     }
 }
 
-nebulaResolutionRules {
-    optional = ['slf4j-bridge']
-}
-
 javadoc {
     description = "Generates project-level javadoc for use in -javadoc jar"
     configure(options) {
@@ -112,7 +82,7 @@ javadoc {
         author = true
         header = project.name
 
-        ext.javadocLinks = [
+        def javadocLinks = [
                 "http://docs.oracle.com/javase/8/docs/api/",
                 "http://docs.oracle.com/javaee/7/api/",
                 "https://google.github.io/guava/releases/${versions.guava}/api/docs/"
@@ -164,9 +134,9 @@ task "publishArtifacts"  {
     project.artifactoryPublish.enabled = false
     project.bintrayUpload.enabled = false
 
-    ext.tag = System.getenv("TRAVIS_TAG")
-    ext.branch = System.getenv("TRAVIS_BRANCH")
-    ext.pullRequest = System.getenv("TRAVIS_PULL_REQUEST")
+    def tag = System.getenv("TRAVIS_TAG")
+    def branch = System.getenv("TRAVIS_BRANCH")
+    def pullRequest = System.getenv("TRAVIS_PULL_REQUEST")
 
     if ( tag || (branch == 'master' && pullRequest == 'false')) {
         if( tag && !isSnapshot ) {

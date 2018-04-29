@@ -29,6 +29,8 @@ import javax.annotation.Nullable;
  * @param <T> type of elements in the batch
  */
 public final class Batch<T> {
+
+    @Nullable
     private final String nextToken;
     private final Iterable<T> iterable;
 
@@ -41,6 +43,7 @@ public final class Batch<T> {
         this.iterable = Iterables.unmodifiableIterable(iterable);
     }
 
+    @Nullable
     String getNextToken() {
         return nextToken;
     }

@@ -30,14 +30,14 @@ import java.util.Optional;
  */
 final class JsonGenerator {
 
-    private static Escaper jsonEscaper = new CharEscaperBuilder().addEscape('"', "\\\"").addEscape('\\', "\\\\").toEscaper();
+    private static final Escaper JSON_ESCAPER = new CharEscaperBuilder().addEscape('"', "\\\"").addEscape('\\', "\\\\").toEscaper();
 
     static String mapToJson(Map<String, Object> map) {
         Map<String, String> jsonProperties = new LinkedHashMap<>();
 
         map.forEach((key, value) -> {
-            String escapedKey = '"' + jsonEscaper.escape(key) + '"';
-            String escapedValue = '"' + Optional.ofNullable(value).map(v -> jsonEscaper.escape(v.toString())).orElse("null") + '"';
+            String escapedKey = '"' + JSON_ESCAPER.escape(key) + '"';
+            String escapedValue = '"' + Optional.ofNullable(value).map(v -> JSON_ESCAPER.escape(v.toString())).orElse("null") + '"';
             jsonProperties.put(escapedKey, escapedValue);
         });
         Joiner.MapJoiner joiner = Joiner.on(',').withKeyValueSeparator(':');

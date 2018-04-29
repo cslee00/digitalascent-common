@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.GZIPOutputStream;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 public final class ConfigurableGZIPOutputStream extends GZIPOutputStream {
     public ConfigurableGZIPOutputStream(OutputStream out, int size, GzipCompressionLevel compressionLevel ) throws IOException {
         super(out, size);

@@ -42,7 +42,7 @@ public final class ExtraThreads {
 
         ThreadFactoryBuilder builder = new ThreadFactoryBuilder();
         builder.setUncaughtExceptionHandler(DEFAULT_UNCAUGHT_EXCEPTION_HANDLER);
-        builder.setNameFormat(String.format("%s-%d-%%d", threadPoolPrefix, threadFactoryCounter.incrementAndGet()));
+        builder.setNameFormat(String.format("%s-%d-%%d", threadPoolPrefix, THREAD_FACTORY_COUNTER.incrementAndGet()));
         return builder;
     }
 
@@ -128,7 +128,7 @@ public final class ExtraThreads {
         StaticUtilityClass.throwCannotInstantiateError( getClass() );
     }
 
-    private static AtomicLong threadFactoryCounter = new AtomicLong();
+    private static final AtomicLong THREAD_FACTORY_COUNTER = new AtomicLong();
     private static final Thread.UncaughtExceptionHandler DEFAULT_UNCAUGHT_EXCEPTION_HANDLER = new LoggingUncaughtExceptionHandler();
 
 }
