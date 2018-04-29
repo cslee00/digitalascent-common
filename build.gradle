@@ -18,7 +18,7 @@ plugins {
     id "java-library"
     id "groovy"
 
-    id "com.digitalascent.gradle.project" version "0.2.2"
+    id "com.digitalascent.gradle.project" version "0.2.3"
 }
 
 scmVersion {
@@ -124,30 +124,6 @@ bintray {
         }
     }
 }
-/*
-
-task "publishArtifacts"  {
-    dependsOn = [release,bintrayUpload,artifactoryPublish]
-    group = "publishing"
-    def isSnapshot = version.endsWith("SNAPSHOT")
-
-    project.bintrayUpload.enabled = false
-    project.artifactoryPublish.enabled = false
-    project.bintrayUpload.enabled = false
-
-    def tag = System.getenv("TRAVIS_TAG")
-    def branch = System.getenv("TRAVIS_BRANCH")
-    def pullRequest = System.getenv("TRAVIS_PULL_REQUEST")
-
-    if ( tag || (branch == 'master' && pullRequest == 'false')) {
-        if( tag && !isSnapshot ) {
-            bintrayUpload.enabled = true
-        } else {
-            artifactoryPublish.enabled = true
-        }
-    }
-}
-*/
 
 wrapper {
     gradleVersion = "4.6"
