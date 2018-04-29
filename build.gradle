@@ -18,7 +18,7 @@ plugins {
     id "java-library"
     id "groovy"
 
-    id "com.digitalascent.gradle.project" version "0.2.1"
+    id "com.digitalascent.gradle.project" version "0.2.2"
 }
 
 scmVersion {
@@ -124,6 +124,7 @@ bintray {
         }
     }
 }
+/*
 
 task "publishArtifacts"  {
     dependsOn = [release,bintrayUpload,artifactoryPublish]
@@ -146,6 +147,7 @@ task "publishArtifacts"  {
         }
     }
 }
+*/
 
 wrapper {
     gradleVersion = "4.6"
