@@ -18,7 +18,7 @@ plugins {
     id "java-library"
     id "groovy"
 
-    id "com.digitalascent.gradle.project" version "0.3.4"
+    id "com.digitalascent.gradle.project" version "0.3.5"
 }
 
 scmVersion {
@@ -90,9 +90,9 @@ contacts {
 
 bintray {
     pkg {
-        websiteUrl = 'https://github.com/cslee00/${project.name}'
-        issueTrackerUrl = 'https://github.com/cslee00/${project.name}/issues'
-        vcsUrl = 'https://github.com/cslee00/${project.name}.git'
+        websiteUrl = "https://github.com/cslee00/${project.name}"
+        issueTrackerUrl = "https://github.com/cslee00/${project.name}/issues"
+        vcsUrl = "https://github.com/cslee00/${project.name}.git"
     }
 }
 
