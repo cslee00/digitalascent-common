@@ -18,7 +18,7 @@ plugins {
     id "java-library"
     id "groovy"
 
-    id "com.digitalascent.gradle.project" version "0.3.2"
+    id "com.digitalascent.gradle.project" version "0.3.3"
 }
 
 scmVersion {
