@@ -18,7 +18,7 @@ plugins {
     id "java-library"
     id "groovy"
 
-    id "com.digitalascent.gradle.project" version "0.2.7"
+    id "com.digitalascent.gradle.project" version "0.3.1"
 }
 
 scmVersion {
@@ -39,26 +39,6 @@ repositories {
     jcenter()
 }
 
-
-tasks.withType(JavaCompile) {
-
-    configure(options) {
-        // http://docs.oracle.com/javase/8/docs/technotes/tools/windows/javac.html#BHCJCABJ
-        ext.lintOpts = ["serial", "varargs", "cast", "classfile", "dep-ann", "divzero", "empty", "finally",
-                        "overrides", "path", "processing", "static", "try", "fallthrough", "rawtypes", "deprecation",
-                        "unchecked", "-options"].collect { "-Xlint:${it}" }
-
-
-        // http://docs.oracle.com/javase/8/docs/technotes/tools/windows/javac.html
-        // -Werror - terminates compilation when warnings occur
-        ext.generalArgs = []
-//            ext.generalArgs = ["-Werror"]
-
-        compilerArgs += lintOpts
-        compilerArgs += generalArgs
-        encoding = 'UTF-8'
-    }
-}
 ext.versions = [
         "guava" : "24.0-jre",
         "slf4j" : "1.7.25",
