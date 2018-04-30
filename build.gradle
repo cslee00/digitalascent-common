@@ -18,17 +18,8 @@ plugins {
     id "java-library"
     id "groovy"
 
-    id "com.digitalascent.gradle.project" version "0.3.6"
+    id "com.digitalascent.gradle.project" version "0.4.0"
 }
-
-scmVersion {
-    localOnly = true
-    tag {
-        prefix = 'release'
-        versionSeparator = '/'
-    }
-}
-
 
 group = "com.digitalascent"
 sourceCompatibility = 1.8
@@ -37,46 +28,6 @@ version = scmVersion.version
 
 repositories {
     jcenter()
-}
-
-ext.versions = [
-        "guava" : "24.0-jre",
-        "slf4j" : "1.7.25",
-]
-
-dependencies {
-    implementation group: 'com.google.guava', name: 'guava', version: "${versions.guava}"
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: "${versions.slf4j}"
-
-    testRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: "${versions.slf4j}"
-    testImplementation "org.codehaus.groovy:groovy-all:2.4.12"
-    testImplementation "org.spockframework:spock-core:1.1-groovy-2.4"
-    testRuntimeOnly('com.athaydes:spock-reports:1.3.1') {
-        transitive = false // this avoids affecting version of Groovy/Spock
-    }
-}
-
-javadoc {
-    description = "Generates project-level javadoc for use in -javadoc jar"
-    configure(options) {
-        memberLevel = JavadocMemberLevel.PROTECTED
-        author = true
-        header = project.name
-
-        def javadocLinks = [
-                "http://docs.oracle.com/javase/8/docs/api/",
-                "http://docs.oracle.com/javaee/7/api/",
-                "https://google.github.io/guava/releases/${versions.guava}/api/docs/"
-        ] as String[]
-
-        links(javadocLinks)
-        addStringOption('Xdoclint:none', '-quiet')
-    }
-
-    // Suppress warnings due to cross-module @see and @link references.
-    // Note that global 'api' task does display all warnings.
-    logging.captureStandardError LogLevel.INFO
-    logging.captureStandardOutput LogLevel.INFO  // suppress "## warnings" message
 }
 
 contacts {
@@ -96,4 +47,21 @@ bintray {
 
 wrapper {
     gradleVersion = "4.6"
+}
+
+ext.versions = [
+    "guava" : "24.0-jre",
+    "slf4j" : "1.7.25",
+]
+
+dependencies {
+    implementation group: 'com.google.guava', name: 'guava', version: "${versions.guava}"
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: "${versions.slf4j}"
+
+    testRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: "${versions.slf4j}"
+    testImplementation "org.codehaus.groovy:groovy-all:2.4.12"
+    testImplementation "org.spockframework:spock-core:1.1-groovy-2.4"
+    testRuntimeOnly('com.athaydes:spock-reports:1.3.1') {
+        transitive = false // this avoids affecting version of Groovy/Spock
+    }
 }
