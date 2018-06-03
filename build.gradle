@@ -51,7 +51,7 @@ wrapper {
 }
 
 ext.versions = [
-    "guava" : "24.0-jre",
+    "guava" : "25.1-jre",
     "slf4j" : "1.7.25",
 ]
 
