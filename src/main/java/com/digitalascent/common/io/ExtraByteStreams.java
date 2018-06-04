@@ -14,23 +14,23 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public final class ExtraByteStreams {
 
-    public GZIPInputStream gzipInputStream(InputStream inputStream) throws IOException {
+    public static GZIPInputStream gzipInputStream(InputStream inputStream) throws IOException {
         checkNotNull(inputStream, "inputStream is required");
         return new GZIPInputStream(inputStream);
     }
 
-    public GZIPOutputStream gzipOutputStream(OutputStream outputStream) throws IOException {
+    public static GZIPOutputStream gzipOutputStream(OutputStream outputStream) throws IOException {
         return gzipOutputStream(outputStream, GzipCompressionLevel.BALANCED);
     }
 
-    public GZIPOutputStream gzipOutputStream(OutputStream outputStream, GzipCompressionLevel compressionLevel) throws IOException {
+    public static GZIPOutputStream gzipOutputStream(OutputStream outputStream, GzipCompressionLevel compressionLevel) throws IOException {
         checkNotNull(outputStream, "outputStream is required");
         checkNotNull(compressionLevel, "compressionLevel is required");
 
         return new ConfigurableGZIPOutputStream(outputStream,compressionLevel);
     }
 
-    public OutputStream closeSuppressingOutputStream(OutputStream outputStream) {
+    public static OutputStream closeSuppressingOutputStream(OutputStream outputStream) {
         checkNotNull(outputStream, "outputStream is required");
         return new FilterOutputStream( outputStream ) {
             @Override
@@ -40,7 +40,7 @@ public final class ExtraByteStreams {
         };
     }
 
-    public InputStream closeSuppressingInputStream(InputStream inputStream) {
+    public static InputStream closeSuppressingInputStream(InputStream inputStream) {
         checkNotNull(inputStream, "inputStream is required");
         return new FilterInputStream(inputStream) {
             @Override
