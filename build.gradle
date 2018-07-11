@@ -47,7 +47,7 @@ bintray {
 }
 
 wrapper {
-    gradleVersion = "4.6"
+    gradleVersion = "4.8"
 }
 
 ext.versions = [
