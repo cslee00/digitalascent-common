@@ -47,6 +47,7 @@ bintray {
 }
 
 wrapper {
+    distributionType = Wrapper.DistributionType.ALL
     gradleVersion = "4.8"
 }
 
