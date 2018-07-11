@@ -4,7 +4,7 @@ jdk:
 
 install: true
 
-script: ./gradlew -Dorg.gradle.warning.mode=all test publishArtifacts --stacktrace -warning-mode=all
+script: ./gradlew test publishArtifacts --stacktrace --warning-mode=all
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
