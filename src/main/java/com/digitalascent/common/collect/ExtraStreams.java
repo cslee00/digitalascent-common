@@ -43,6 +43,7 @@ import java.util.stream.StreamSupport;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.base.Verify.verify;
 
 public final class ExtraStreams {
@@ -116,7 +117,7 @@ public final class ExtraStreams {
                     currentBatch = batchSupplier.nextBatch(currentBatch.getNextToken());
 
                     verify(currentBatch != null, "Null batch returned from %s", batchSupplier.getClass());
-                    verify(lastToken == null || !Objects.equals(lastToken, currentBatch.getNextToken()), "Received the same batch token '%s' for two batches, aborting", lastToken);
+                    checkState(lastToken == null || !Objects.equals(lastToken, currentBatch.getNextToken()), "Received the same batch token '%s' for two batches, aborting", lastToken);
 
                     Uninterruptibles.putUninterruptibly(queue, currentBatch.getIterable());
                     lastToken = currentBatch.getNextToken();
