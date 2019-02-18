@@ -1,6 +1,7 @@
 package com.digitalascent.common.io;
 
 import com.google.common.io.ByteSink;
+import com.google.errorprone.annotations.MustBeClosed;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -20,6 +21,7 @@ public final class GzipByteSink extends ByteSink {
         this(delegate, GzipCompressionLevel.BALANCED);
     }
 
+    @MustBeClosed
     @Override
     public OutputStream openStream() throws IOException {
         return new ConfigurableGZIPOutputStream(delegate.openBufferedStream(), compressionLevel);

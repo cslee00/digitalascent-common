@@ -16,6 +16,7 @@
 
 package com.digitalascent.common.concurrent;
 
+import com.digitalascent.common.base.StaticUtilityClass;
 import com.google.common.base.Joiner;
 import com.google.common.escape.CharEscaperBuilder;
 import com.google.common.escape.Escaper;
@@ -45,6 +46,6 @@ final class JsonGenerator {
     }
 
     private JsonGenerator() {
-        throw new AssertionError("Cannot instantiate " + getClass());
+        StaticUtilityClass.throwCannotInstantiateError(getClass());
     }
 }

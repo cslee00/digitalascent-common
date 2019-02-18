@@ -1,6 +1,7 @@
 package com.digitalascent.common.io;
 
 import com.google.common.io.ByteSource;
+import com.google.errorprone.annotations.MustBeClosed;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +16,7 @@ public final class GzipByteSource extends ByteSource {
         this.delegate = checkNotNull(delegate, "delegate is required");
     }
 
+    @MustBeClosed
     @Override
     public InputStream openStream() throws IOException {
         return new GZIPInputStream( delegate.openBufferedStream() );

@@ -18,7 +18,7 @@ plugins {
     id "java-library"
     id "groovy"
 
-    id "com.digitalascent.gradle.project" version "0.5.1"
+    id "com.digitalascent.gradle.project" version "0.6.0"
 }
 
 description = "Common Java utility library"
@@ -48,22 +48,22 @@ bintray {
 
 wrapper {
     distributionType = Wrapper.DistributionType.ALL
-    gradleVersion = "4.8"
+    gradleVersion = "5.2.1"
 }
 
-ext.versions = [
-    "guava" : "25.1-jre",
-    "slf4j" : "1.7.25",
-]
-
 dependencies {
-    implementation group: 'com.google.guava', name: 'guava', version: "${versions.guava}"
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: "${versions.slf4j}"
+    implementation group: 'com.google.guava', name: 'guava', version: "27.0-jre"
+    implementation "com.digitalascent:digitalascent-fluent-logger:1.0.2"
 
-    testRuntimeOnly group: 'org.slf4j', name: 'slf4j-simple', version: "${versions.slf4j}"
     testImplementation "org.codehaus.groovy:groovy-all:2.4.12"
     testImplementation "org.spockframework:spock-core:1.1-groovy-2.4"
     testRuntimeOnly('com.athaydes:spock-reports:1.3.1') {
         transitive = false // this avoids affecting version of Groovy/Spock
+    }
+}
+
+jar {
+    manifest {
+        attributes("Automatic-Module-Name": "com.digitalascent.common")
     }
 }

@@ -16,15 +16,17 @@
 
 package com.digitalascent.common.concurrent;
 
-import com.digitalascent.common.base.SimpleApplicationObject;
+import com.digitalascent.logger.FluentLogger;
 
 /**
  * Uncaught exception handler that logs the thread name & exception
  */
-final class LoggingUncaughtExceptionHandler extends SimpleApplicationObject implements Thread.UncaughtExceptionHandler {
+final class LoggingUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
+
+    private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        getLogger().error("Uncaught exception in thread {}", t.getName(), e);
+        logger.atError().withCause(e).log("Uncaught exception in thread %s", t.getName());
     }
 }
