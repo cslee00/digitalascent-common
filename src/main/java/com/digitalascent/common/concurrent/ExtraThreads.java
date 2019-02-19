@@ -17,10 +17,13 @@
 package com.digitalascent.common.concurrent;
 
 import com.digitalascent.common.base.StaticUtilityClass;
+import com.digitalascent.common.io.CharArrayWriter;
+import com.digitalascent.common.json.JsonGenerator;
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -28,6 +31,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
+import static com.digitalascent.common.base.LambdaCheckedExceptionRethrowers.rethrowingBiConsumer;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
@@ -102,7 +106,7 @@ public final class ExtraThreads {
         finalThreadContext.putAll(threadContext);
         finalThreadContext.put("originalThreadName", originalThreadName);
 
-        String threadContextJson = JsonGenerator.mapToJson(finalThreadContext);
+        String threadContextJson = convertMapToJson( finalThreadContext );
 
         try {
             Thread.currentThread().setName(threadContextJson);
@@ -112,6 +116,21 @@ public final class ExtraThreads {
             throw new RuntimeException(e);
         } finally {
             Thread.currentThread().setName(originalThreadName);
+        }
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private static String convertMapToJson(Map<String,Object> threadContext ) {
+
+        CharArrayWriter charArrayWriter = new CharArrayWriter(1024);
+        JsonGenerator jsonGenerator = new JsonGenerator(charArrayWriter,true,"");
+        try {
+            jsonGenerator.beginObject();
+            threadContext.forEach(rethrowingBiConsumer((k, v) -> jsonGenerator.name(k).value(v.toString())));
+            jsonGenerator.endObject();
+            return charArrayWriter.toString();
+        } catch( IOException ignored) {
+            return "";
         }
     }
 
